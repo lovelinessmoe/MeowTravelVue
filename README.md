@@ -5,7 +5,7 @@
 
 内蒙古师范大学2019计算机科学技术学院曹顺淼毕业设计
 基于SpringBoot表情包商城管理系统的设计与实现
-- 技术：SpringBoot,SpringSrcurity,Mysql,Mybatis,VUE
+- 技术：SpringBoot,SpringSecurity,Mysql,Mybatis,VUE
 - 用户：管理员、注册用户、游客
 - 功能：完成管理表情包的软件，实现对功能，例如创建一个新的文件夹，根据表情包内容进行分类，图片的下载保存
     - 游客：查看公开的表情包,可以下载能看到的表情包
