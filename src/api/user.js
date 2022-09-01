@@ -2,14 +2,14 @@ import request from "../utils/request";
 
 export const getUserInfo = () => {
     return request({
-        url: 'user/getUserInfo',
+        url: '/user/user/getUserInfo',
         method: 'get',
     })
 }
 
 export const getModifyInfMail = (captchaVal) => {
     return request({
-        url: 'user/modifyInfMail',
+        url: '/user/user/modifyInfMail',
         method: 'post',
         params: {
             captchaVerification: captchaVal.captchaVerification,
@@ -20,7 +20,7 @@ export const getModifyInfMail = (captchaVal) => {
 
 export const updateUserInfoApi = (user, mailCode) => {
     return request({
-        url: 'user/updateUserInfo',
+        url: '/user/user/updateUserInfo',
         method: 'post',
         data: user,
         params: {

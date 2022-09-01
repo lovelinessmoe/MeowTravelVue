@@ -1,6 +1,5 @@
 import store from '../store'
 
-
 /**
  * 获取登陆用户
  * 如果是没登陆返回的是undefined

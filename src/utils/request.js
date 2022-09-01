@@ -5,14 +5,15 @@ import store from '../store'
 import router from '../router'
 
 const instance = axios.create({
-    baseURL: 'http://localhost/',
-    timeout: 10000
+    baseURL: 'http://localhost:9201/', timeout: 10000
 })
 
 // request拦截器
 instance.interceptors.request.use(config => {
     if (store.state.user) {
-        config.headers.Authorization = store.state.user.token
+        config.headers.Authorization = store.state.user.auth.token;
+        // 处理刷新token后重新请求的自定义变量
+        config['refresh_token'] = false
     }
     return config
 }, error => {
@@ -24,35 +25,26 @@ instance.interceptors.response.use(response => {
     const res = response.data
     if (!res.success) {
         ElNotification({
-            message: res.message,
-            title: '警告',
-            type: 'warning'
+            message: res.message, title: '警告', type: 'warning'
         })
 
         //登陆过期
         if (res.code === 2002) {
             removeUser()
-            // this.$router.push('/login')
             router.push('/login')
-            // window.location.href = '/login'
         }
-
-        // return Promise.reject(res)
         return response.data
     } else {
         if (res.message !== null) {
             ElNotification({
-                message: res.message,
-                title: '提示',
-                type: 'success'
+                message: res.message, title: '提示', type: 'success'
             })
         }
         return response.data
     }
 }, error => {
     ElNotification.error({
-        title: '网络错误' + error,
-        message: '服务器超时'
+        title: '网络错误' + error, message: '服务器超时'
     })
     return Promise.reject('error')
 })

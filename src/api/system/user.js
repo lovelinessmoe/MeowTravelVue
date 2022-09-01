@@ -2,7 +2,7 @@ import request from '../../utils/request'
 
 export const getList = (current, size, params) => {
     return request({
-        url: 'backstage/user/list',
+        url: 'system/user/list',
         method: 'get',
         params: {
             ...params,
@@ -14,7 +14,7 @@ export const getList = (current, size, params) => {
 
 export const add = (user) => {
     return request({
-        url: 'backstage/user/submit',
+        url: 'system/user/submit',
         method: 'post',
         data: user,
     })
@@ -22,7 +22,7 @@ export const add = (user) => {
 
 export const update = (row) => {
     return request({
-        url: 'backstage/user/submit',
+        url: 'system/user/submit',
         method: 'post',
         data: row
     })
@@ -30,7 +30,7 @@ export const update = (row) => {
 
 export const remove = (ids) => {
     return request({
-        url: 'backstage/user/remove',
+        url: 'system/user/remove',
         method: 'post',
         params: {
             userId: ids,
@@ -39,7 +39,7 @@ export const remove = (ids) => {
 }
 export const removeMany = (userList) => {
     return request({
-        url: 'backstage/user/removeMany',
+        url: 'system/user/removeMany',
         method: 'post',
         data: userList
     })

@@ -3,9 +3,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
-  optimizeDeps: {
-    include: ['BMapGL']
-  }
+    plugins: [vue()],
+    optimizeDeps: {
+        include: ['BMapGL']
+    }
 })
 

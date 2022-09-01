@@ -1,14 +1,18 @@
 import request from '../utils/request'
+import qs from 'qs'
 
 export const login = (loginUser) => {
+    loginUser.client_id = 'meow_travel';
+    loginUser.client_secret = '123456';
+    loginUser.grant_type = 'captcha';
+
     return request({
-        url: '/auth/login',
+        url: '/auth/oauth/token',
         method: 'post',
-        data: loginUser,
-        params: {
-            captchaVerification: loginUser.captchaVerification,
-            code: loginUser.verifyCode
-        }
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: qs.stringify(loginUser)
     })
 }
 
@@ -21,13 +25,13 @@ export const logout = () => {
 
 export const captcha = () => {
     return request({
-        url: '/auth/captcha',
+        url: '/user/auth/captcha',
         method: 'post'
     })
 }
 export const register = (loginUser) => {
     return request({
-        url: '/auth/register',
+        url: '/user/auth/register',
         method: 'post',
         data: loginUser,
         params: {
@@ -37,12 +41,12 @@ export const register = (loginUser) => {
 }
 export const getRegisterEmail = (loginUser) => {
     return request({
-        url: '/auth/registerMail',
+        url: '/user/auth/registerMail',
         method: 'post',
         data: loginUser,
         params: {
             captchaVerification: loginUser.captchaVerification,
-            code: loginUser.verifyCode
+            code: loginUser.code
         }
     })
 }
