@@ -5,16 +5,21 @@ import store from '../store'
 const routes = [
     {path: '/', redirect: '/travel'},
     {
-        path: '/travel/', component: () => import('../Page/Home.vue'),
+        path: '/travel/', component: () => import('../page/MainPage.vue'),
         children: [
             {path: '', redirect: '/travel/home'},
-            {path: 'home', component: () => import('../Page/Home.vue')},
+            {path: 'home', component: () => import('../page/Home.vue'), meta: {title: '首页'}},
+            {path: 'userInfo', component: () => import('../page/user/UserInfo.vue'), meta: {title: '用户信息'}},
+            {
+                path: 'article/:id',
+                component: () => import('../page/Tactic.vue'),
+                meta: {title: '文章', params: 'id'}
+            },
         ]
     },
-    {path: '/travel/userInfo', component: () => import('../Page/UserInfo.vue'), meta: {title: '用户信息'}},
-    {path: '/login', component: () => import('../Page/Login.vue'), meta: {title: '登陆'}},
+    {path: '/login', component: () => import('../page/Login.vue'), meta: {title: '登陆'}},
     {
-        path: '/system/', component: () => import('../Page/system/BackHomePage.vue'),
+        path: '/system/', component: () => import('../page/MainPage.vue'),
         beforeEnter: () => {
             // 如果store.state.user是undefined返回false，正常返回他的权限是否等于ROLE_ADMIN
             if (store.state.user ? false : this.$store.state.user.role === 'ROLE_ADMIN') {
@@ -26,9 +31,10 @@ const routes = [
             }
         },
         children: [
-            {path: '', redirect: '/system/home.vue'},
-            {path: 'home', component: () => import('../Page/system/BackHomePage.vue')},
-            {path: 'userMan', component: () => import('../Page/system/UserMan.vue'), meta: {title: '用户管理'}},
+            {path: '', redirect: '/system/home'},
+            {path: 'home', component: () => import('../page/system/SystemHome.vue')},
+            {path: 'userMan', component: () => import('../page/system/UserMan.vue'), meta: {title: '用户管理'}},
+            {path: 'tacticMan', component: () => import('../page/system/TacticMan.vue'), meta: {title: '攻略管理'}},
         ]
     },
 ]
@@ -39,7 +45,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    let title = 'MeowBlog'
+    let title = 'MeowTravel'
     if (to.meta.params) {
         title = `${to.params[to.meta.params] || ''} - ${title}`
     } else {

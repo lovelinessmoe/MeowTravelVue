@@ -12,6 +12,9 @@ import moment from 'moment'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElIconModules from '@element-plus/icons-vue'
+import request from "./utils/request.js";
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 const app = createApp(App)
 
@@ -20,11 +23,12 @@ app.use(store)
 app.use(_)
 app.config.globalProperties.$_ = _
 
+window.axios = request
 
 app.use(Avue, {size: 'small',});
 
 app.use(router)
-
+app.use(mavonEditor)
 app.use(moment)
 app.config.globalProperties.$moment = moment
 

@@ -75,13 +75,13 @@
 </template>
 
 <script setup>
-import {getModifyInfMail, getUserInfo, updateUserInfoApi} from "../api/user";
+import {getModifyInfMail, getUserInfo, updateUserInfoApi} from "../../api/user.js";
 import {onBeforeMount, ref} from "vue";
-import authCheck from '../hooks/useCaptcha'
+import authCheck from '../../hooks/useCaptcha.js'
 import {ElNotification} from "element-plus";
-import {logout} from "../api/login";
-import {removeUser} from "../utils/token";
-import router from '../router'
+import {logout} from "../../api/login.js";
+import {removeUser} from "../../utils/token.js";
+import router from '../../router/index.js'
 
 const {getCaptcha, captchaVal} = authCheck()
 

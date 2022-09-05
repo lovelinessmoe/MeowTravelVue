@@ -128,7 +128,7 @@ export default {
 						message: '登陆成功',
 						type: 'success'
 					});
-					await this.$router.push('/blog/home');
+					await this.$router.push('/travel/home');
 				} else {
 					//重新获取验证码
 					await this.captcha()
