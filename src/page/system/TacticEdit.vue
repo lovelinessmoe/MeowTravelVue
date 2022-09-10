@@ -36,15 +36,14 @@
 				id="mavon_editor"
 				v-model="blogForm.content"
 				:toolbars="markdownOption"
+				ref=md @imgAdd="imgAdd"
 				@save="submitForm()"/>
-			<!--                    ctrl + s 的回调事件(保存按键,同样触发该回调)-->
-
 			<el-button type="primary" @click="submitForm()">保存</el-button>
 			<el-button type="danger" @click="this.$emit('close');">取消</el-button>
 		</el-card>
 	</el-form>
 
-	<!-- 剪裁组件弹窗 -->
+	<!-- 文章剪裁组件弹窗 -->
 	<el-dialog
 		v-model="cropperModel"
 		fullscreen="fullscreen"
@@ -124,6 +123,18 @@ export default {
 		}
 	},
 	methods: {
+		// 绑定图片上传
+		async imgAdd(pos, $file) {
+			const {uploadArticleInnerImg} = useUpYun();
+			let res = await uploadArticleInnerImg($file)
+			/**
+			 * $vm 指为mavonEditor实例，可以通过如下两种方式获取
+			 * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
+			 * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
+			 */
+			this.$refs.md.$img2Url(pos, res.data);
+
+		},
 		async submitForm() {
 			const res = await saveOrUpdateTactic(this.blogForm)
 			if (res.success) {
@@ -147,7 +158,7 @@ export default {
 		//上传图片
 		async handleUpload(data) {
 			const {uploadArticleImg} = useUpYun();
-			let res = await uploadArticleImg(data, this.blogForm.articleId);
+			let res = await uploadArticleImg(data, this.blogForm.tacticId);
 			if (res.success) {
 				this.blogForm.imgUrl = res.data;
 				this.cropperModel = false;

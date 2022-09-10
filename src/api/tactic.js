@@ -2,7 +2,7 @@ import request from '../utils/request.js'
 
 export const getList = (current, size, params) => {
     return request({
-        url: 'tactic/getList',
+        url: 'user/tactic/list',
         method: 'get',
         params: {
             ...params,
@@ -14,9 +14,8 @@ export const getList = (current, size, params) => {
 
 export const getBlogDetail = (tacticId) => {
     return request({
-        url: 'tactic/detail/' + tacticId,
-        method: 'get',
-        params: tacticId
+        url: 'user/tactic/detail/' + tacticId,
+        method: 'get'
     })
 }
 

@@ -1,15 +1,15 @@
 import request from "../utils/request";
 
-export const getComment = (articleId) => {
+export const getComment = (tacticId) => {
     return request({
-        url: 'comment/getComment/' + articleId,
+        url: 'user/comment/getComment/' + tacticId,
         method: 'get'
     })
 }
 
 export const addComment = (comment) => {
     return request({
-        url: 'comment/addComment',
+        url: 'user/comment/addComment',
         method: 'post',
         data: comment
     })

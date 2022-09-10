@@ -12,27 +12,13 @@
 					{{ notice }}
 				</div>
 			</div>
-
-			<!--焦点图-->
-			<div v-if="!hideSlogan" class="top-feature">
-				<section-title>
-					<div style="display: flex;align-items: flex-end;">聚焦
-						<small-ico></small-ico>
-					</div>
-				</section-title>
-				<div class="feature-content">
-					<div v-for="item in features" :key="item.title" class="feature-item">
-						<Feature :data="item"></Feature>
-					</div>
-				</div>
-			</div>
 			<!--文章列表-->
-			<main :class="{'search':hideSlogan}" class="site-main">
+			<div :class="{'search':hideSlogan}" class="site-main">
 				<section-title v-if="!hideSlogan">推荐</section-title>
-				<template v-for="item in postList" :key="item.articleId">
+				<template v-for="item in postList" :key="item.tacticId">
 					<BlogCard :blog="item"></BlogCard>
 				</template>
-			</main>
+			</div>
 
 			<!--加载更多-->
 			<div v-show="hasNextPage" class="more">
@@ -45,37 +31,19 @@
 <script>
 import {getList} from "../api/tactic.js";
 import Banner from "../components/BannerView.vue";
-import Feature from '../components/FeatureCard.vue'
 import sectionTitle from '../components/SectionTitle.vue'
 import BlogCard from '../components/BlogCard.vue'
 import SmallIco from '../components/SmallIco.vue'
 
 export default {
 	name: "HomePage",
-	components: {Banner, Feature, sectionTitle, BlogCard, SmallIco},
+	components: {Banner, sectionTitle, BlogCard, SmallIco},
 	props: ['cate', 'words'],
 	async created() {
 		await this.getListPage();
 	},
 	data() {
 		return {
-			features: [
-				{
-					id: 1,
-					title: 'Akina',
-					img: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
-				},
-				{
-					id: 2,
-					title: '使用说明',
-					img: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
-				},
-				{
-					id: 3,
-					title: '文章归档',
-					img: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
-				}
-			],
 			postList: [],
 			current: 1,
 			hasNextPage: false

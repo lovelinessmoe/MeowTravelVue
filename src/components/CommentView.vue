@@ -67,7 +67,7 @@ export default {
 		return {
 			showCommentEditor: false,
 			replyComment: {
-				articleId: this.$route.params.id,
+				tacticId: this.$route.params.id,
 				content: '',
 				level: '0',
 				pid: this.comment.commentId,

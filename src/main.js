@@ -17,26 +17,19 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 
 const app = createApp(App)
-
 app.use(store)
-
 app.use(_)
 app.config.globalProperties.$_ = _
-
 window.axios = request
-
 app.use(Avue, {size: 'small',});
-
 app.use(router)
 app.use(mavonEditor)
 app.use(moment)
 app.config.globalProperties.$moment = moment
-
 app.use(ElementPlus)
 // 统一注册el-icon图标
 for (let iconName in ElIconModules) {
     app.component(iconName, ElIconModules[iconName])
 }
-
 app.config.silent = true
 app.mount('#app')

@@ -3,16 +3,12 @@
 	<div class="articles">
 		<banner :src="this.blog.imgUrl"></banner>
 		<div class="site-content animate">
-			<!-- 文章目录 -->
-			<div id="article-menus">
-				<menu-tree :menus="menus" child-label="child"></menu-tree>
-			</div>
-			<main class="site-main">
+			<div class="site-main">
 				<article class="hentry">
 					<!-- 文章头部 -->
 					<header class="entry-header">
 						<!-- 标题输出 -->
-						<h1 class="entry-title">{{ blog.articleTitle }}</h1>
+						<h1 class="entry-title">{{ blog.title }}</h1>
 						<hr>
 						<div class="breadcrumbs">
 							<div id="crumbs">最后更新时间：{{ this.$moment(blog.createTime).format('YYYY年MM月DD日') }}
@@ -24,7 +20,7 @@
 					<div class="entry-content">
 						<mavon-editor
 							id="mavon_editor"
-							v-model="blog.articleContent"
+							v-model="blog.content"
 							:boxShadow="false" :editable="false"
 							:ishljs="true" :scrollStyle="true"
 							:subfield="false" :toolbarsFlag="false"
@@ -107,7 +103,7 @@
 						</comment>
 					</div>
 				</article>
-			</main>
+			</div>
 		</div>
 	</div>
 </template>
@@ -116,7 +112,6 @@
 import Banner from '../components/BannerView.vue'
 import sectionTitle from '../components/SectionTitle.vue'
 import comment from '../components/CommentView.vue'
-import menuTree from '../components/MenuTree.vue'
 import {getBlogDetail} from "../api/tactic.js";
 import {addComment, getComment} from "../api/comment.js";
 import {ElNotification} from "element-plus";
@@ -127,10 +122,9 @@ export default {
 		return {
 			showDonate: false,
 			comments: [],
-			menus: [],
 			blog: {},
 			replyComment: {
-				articleId: this.$route.params.id,
+				tacticId: this.$route.params.id,
 				content: '',
 				level: '0',
 				pid: '0',
@@ -142,50 +136,15 @@ export default {
 		Banner,
 		sectionTitle,
 		comment,
-		menuTree
 	},
 	methods: {
 		async getComment() {
 			let res = await getComment(this.$route.params.id);
 			this.comments = res.data || [];
 		},
-		fetchH(arr, left, right) {
-			if (right) {
-				return arr.filter(item => item.offsetTop > left && item.offsetTop < right)
-			} else {
-				return arr.filter(item => item.offsetTop > left)
-			}
-		},
-		// 生成目录
-		createMenus() {
-			let arr = []
-			for (let i = 6; i > 0; i--) {
-				let temp = []
-				// let e = document.querySelector(".entry-content").querySelectorAll(`h${i}`)
-				let e = document.querySelector(".v-note-show").querySelectorAll(`h${i}`)
-				for (let j = 0; j < e.length; j++) {
-					let child = this.fetchH(arr, e[j].offsetTop, (j + 1 === e.length) ? undefined : e[j + 1].offsetTop)
-					e[j].setAttribute("id", e[j].innerText);
-					temp.push({
-						h: i,
-						title: e[j].innerText,
-						id: e[j].id,
-						offsetTop: e[j].offsetTop,
-						child
-					})
-				}
-				if (temp.length) {
-					arr = temp
-				}
-			}
-			this.menus = arr
-		},
 		async getBlog() {
 			let res = await getBlogDetail(this.$route.params.id);
 			this.blog = res.data;
-			this.$nextTick(function () {
-				this.createMenus();
-			})
 		},
 		async submitReply() {
 			if (this.$store.state.user) {

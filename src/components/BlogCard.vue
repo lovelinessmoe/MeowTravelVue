@@ -3,14 +3,14 @@
 	<article class="post post-list">
 		<div class="post-entry">
 			<div class="feature">
-				<router-link :to="`article/${blog.articleId}`">
+				<router-link :to="`article/${blog.tacticId}`">
 					<img :src="this.blog.imgUrl?this.blog.imgUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"/>
 				</router-link>
 			</div>
 			<h1 class="entry-title">
-				<router-link :to="`article/${blog.articleId}`">
+				<router-link :to="`article/${blog.tacticId}`">
 					<span v-if="blog.isTop" style="color:#ff6d6d;font-weight:600">[置顶] </span>
-					{{ blog.articleTitle }}
+					{{ blog.title }}
 				</router-link>
 			</h1>
 			<div class="p-time">
@@ -18,10 +18,10 @@
 				{{ this.$moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss') }}
 				<i v-if="blog.isTop" class="iconfont iconfire" style="margin-left: 5px;color: #ff6d6d;"/>
 			</div>
-			<p class="summary">{{ blog.articleShort }}</p>
+			<p class="summary">{{ blog.shortMsg }}</p>
 			<footer class="entry-footer">
 				<div class="post-more">
-					<router-link :to="`article/${blog.articleId}`">
+					<router-link :to="`article/${blog.tacticId}`">
 						<i class="iconfont iconfish-li" style="font-size: 25px;"/>
 					</router-link>
 				</div>

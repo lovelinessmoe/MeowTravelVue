@@ -4,27 +4,6 @@
 		<div :style="{'background-image': `url(${src?src:'https://s2.loli.net/2022/04/05/L7DH4coMPSAKe1a.jpg'})`}"
 		     class="banner-img">
 			<template v-if="isHome">
-				<!--博主信息-->
-				<div class="focusinfo">
-					<!-- 头像 -->
-					<div class="header-tou">
-						<router-link to="/">
-							<img src="http://q1.qlogo.cn/g?b=qq&nk=1695560542&s=640">
-						</router-link>
-					</div>
-					<!-- 简介 -->
-					<div class="header-info">
-						<p>{{ slogan }}</p>
-					</div>
-					<!-- 社交信息 -->
-					<div class="top-social">
-						<div v-for="item in socials" :key="item.id" :title="item.title">
-							<a :href="item.href" :style="{'color':item.color}" target="_blank">
-								<i :class="item.icon" class="iconfont"></i>
-							</a>
-						</div>
-					</div>
-				</div>
 				<!--左右倾斜-->
 				<div class="slant-left"></div>
 				<div class="slant-right"></div>
@@ -39,27 +18,6 @@ export default {
 	data() {
 		return {
 			websiteInfo: {},
-			socials: [{
-				id: 1,
-				title: 'QQ',
-				icon: 'iconqq',
-				color: '#1AB6FF ',
-				href: 'http://wpa.qq.com/msgrd?v=3&uin=1695560542&site=qq&menu=yes'
-			}, {
-				id: 2,
-				title: 'Gitee',
-				icon: 'icongitee',
-				color: '#d81e06',
-				href: 'https://gitee.com/lovelinessmoe'
-			}, {
-				id: 3,
-				title: 'GitHub',
-				icon: 'icongithub',
-				color: '',
-				href: 'https://github.com/lovelinessmoe'
-			}],
-			slogan: '苟利国家生死以',
-			avatar: '@/assets/img/logo.svg'
 		}
 	},
 	props: {

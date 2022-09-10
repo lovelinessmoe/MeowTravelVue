@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import {logout} from "../api/login";
 import HeaderSearch from "../components/HeaderSearch.vue";
 import {removeUser} from "../utils/token";
 
@@ -81,7 +80,7 @@ export default {
 			await removeUser();
 		},
 		async switchUser() {
-			await logout();
+			// await logout();
 			await removeUser();
 			await this.$router.push("/login");
 		},

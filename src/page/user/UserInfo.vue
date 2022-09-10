@@ -17,22 +17,21 @@
 						</template>
 						<div>
 							<el-row>
-								<el-col :md="12" :sm="12" :xs="24" class="grid-cell">
-									<el-form-item label="姓名" prop="">
-										<el-input v-model="user.realName" clearable type="text"></el-input>
-									</el-form-item>
+								<el-col :md="8" :sm="10" :xs="24" class="grid-cell">
+									<el-avatar :size="200" :src="user.avatarUrl" fit="fill"
+									           shape="square"
+									           @click="cropperModel=true"/>
 								</el-col>
-								<el-col :md="12" :sm="12" :xs="24" class="grid-cell">
+								<el-col :md="16" :sm="14" :xs="24" class="grid-cell">
+									<el-form-item label="用户名" prop="">
+										<el-input v-model="user.userName" clearable type="text"></el-input>
+									</el-form-item>
 									<el-form-item label="年龄" prop="">
 										<el-input v-model="user.age" clearable type="number"></el-input>
 									</el-form-item>
-								</el-col>
-								<el-col :md="12" :sm="12" :xs="24" class="grid-cell">
 									<el-form-item label="手机号" prop="">
 										<el-input v-model="user.telephone" clearable type="text"></el-input>
 									</el-form-item>
-								</el-col>
-								<el-col :md="12" :sm="12" :xs="24" class="grid-cell">
 									<el-form-item label="密码" prop="">
 										<el-input v-model="user.password" clearable placeholder="留空表示不修改"
 										          type="password"></el-input>
@@ -45,6 +44,18 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 剪裁组件弹窗 -->
+	<el-dialog
+		v-model="cropperModel"
+		fullscreen="fullscreen"
+		title="裁切封面">
+		<cropper-image
+			:fixedNumber="[1,1]"
+			:url="user.avatarUrl?user.avatarUrl:''"
+			@upload-img="handleUpload">
+		</cropper-image>
+	</el-dialog>
 
 	<el-dialog
 		v-model="userCheckModel"
@@ -72,16 +83,20 @@
 		</el-button>
 	</el-dialog>
 
+
 </template>
 
 <script setup>
+import CropperImage from "../../components/CropperImage.vue";
 import {getModifyInfMail, getUserInfo, updateUserInfoApi} from "../../api/user.js";
 import {onBeforeMount, ref} from "vue";
 import authCheck from '../../hooks/useCaptcha.js'
 import {ElNotification} from "element-plus";
-import {logout} from "../../api/login.js";
+// import {logout} from "../../api/login.js";
 import {removeUser} from "../../utils/token.js";
 import router from '../../router/index.js'
+import useUpYun from "../../hooks/useUpYun.js";
+
 
 const {getCaptcha, captchaVal} = authCheck()
 
@@ -94,6 +109,22 @@ onBeforeMount(async () => {
 	user.value = res.data;
 });
 let userCheckModel = ref(false);
+
+
+//图片上传
+let cropperModel = ref(false);
+
+const {uploadAvatarImg} = useUpYun();
+
+//图片上传
+async function handleUpload(data) {
+	let res = await uploadAvatarImg(data);
+	if (res.success) {
+		user.value.avatarUrl = res.data;
+		cropperModel.value = false;
+	}
+}
+
 
 //邮箱
 let mailCode = ref('');
@@ -129,7 +160,7 @@ async function updateUserInfo() {
 			type: 'success'
 		})
 		userCheckModel.value = false;
-		await logout();
+		// await logout();
 		await removeUser();
 		await router.push('/login')
 	}
