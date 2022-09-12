@@ -30,9 +30,7 @@
 				/>
 				<!--                        :scrollStyle="true"-->
 			</template>
-
 		</avue-crud>
-
 	</div>
 </template>
 

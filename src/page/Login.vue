@@ -68,12 +68,14 @@ export default {
 				userName: '',
 				password: '',
 				email: '',
-				age: '',
-				telephone: '',
 				code: '',
 				captchaVerification: '',
 				RePassword: '',
-				mailCode: ''
+				mailCode: '',
+				province: '',
+				city: '',
+				district: '',
+				street: '',
 			},
 			captchaImg: null,
 			loginRules: {
@@ -116,7 +118,8 @@ export default {
 		}
 	},
 	created() {
-		this.captcha()
+		this.captcha();
+		this.locationInfoInsert();
 	},
 	methods: {
 		async submitForm() {
@@ -165,6 +168,35 @@ export default {
 		resetForm(formName) {
 			this.$refs[formName].resetFields()
 		},
+		locationInfoInsert() {
+			let that = this;
+			let geolocation = new BMapGL.Geolocation();
+			geolocation.getCurrentPosition(function (r) {
+				if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+					let lng = r.point.lng;
+					let lat = r.point.lat;
+					let myGeo = new BMapGL.Geocoder();
+					// 根据坐标得到地址描述
+					myGeo.getLocation(new BMapGL.Point(lng, lat), function (result) {
+						if (result) {
+							console.log(result)
+							that.loginForm.province = result.addressComponents.province;
+							that.loginForm.city = result.addressComponents.city;
+							that.loginForm.district = result.addressComponents.district;
+							that.loginForm.street = result.addressComponents.street;
+						}
+					});
+				} else if (this.getStatus() == ERR_POSITION_UNAVAILABLE) {
+					that.locationInfoInsert()
+				} else {
+					ElNotification({
+						title: '错误',
+						message: h('i', {style: 'color: teal'}, '没有提供权限定位'),
+					})
+				}
+			});
+		},
+
 		async captcha() {
 			let captchaRes = await captcha()
 			this.captchaImg = captchaRes.data.img
