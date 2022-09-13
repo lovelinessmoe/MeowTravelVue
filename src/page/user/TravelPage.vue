@@ -7,7 +7,7 @@
 
 <script>
 
-import BackTop from "../components/BackToTheTop.vue";
+import BackTop from "../../components/BackToTheTop.vue";
 
 export default {
 	name: "TravelPage",

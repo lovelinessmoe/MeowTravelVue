@@ -88,7 +88,7 @@
 
 <script setup>
 import CropperImage from "../../components/CropperImage.vue";
-import {getModifyInfMail, getUserInfo, updateUserInfoApi} from "../../api/user.js";
+import {getModifyInfMail, getUserInfo, updateUserInfoApi} from "../../api/user/user.js";
 import {onBeforeMount, ref} from "vue";
 import authCheck from '../../hooks/useCaptcha.js'
 import {ElNotification} from "element-plus";

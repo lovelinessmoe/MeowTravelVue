@@ -1,18 +1,12 @@
 <template>
-	<div class="home">
-		<banner isHome="true"></banner>
+	<div class="home" style="margin-top: 80px;">
 		<div class="site-content animate">
-			<!--通知栏-->
-			<div class="notify">
-				<div class="quote">
-					{{ notice }}
-				</div>
-			</div>
+			<span style="font-size: 45px;color: #16bdb2;">我发布的旅游攻略</span>
+
 			<!--文章列表-->
 			<div class="site-main">
-				<section-title>推荐</section-title>
 				<template v-for="item in postList" :key="item.tacticId">
-					<BlogCard :blog="item"></BlogCard>
+					<UserEditBlogCard :blog="item"/>
 				</template>
 			</div>
 
@@ -24,48 +18,33 @@
 	</div>
 </template>
 
-<script>
-import {getList} from "../api/user/tactic.js";
-import Banner from "../components/BannerView.vue";
-import sectionTitle from '../components/SectionTitle.vue'
-import BlogCard from '../components/BlogCard.vue'
-import SmallIco from '../components/SmallIco.vue'
+<script setup>
 
-export default {
-	name: "HomePage",
-	components: {Banner, sectionTitle, BlogCard, SmallIco},
-	props: [],
-	async created() {
-		await this.getListPage();
-	},
-	data() {
-		return {
-			postList: [],
-			current: 1,
-			hasNextPage: false
-		}
-	},
-	computed: {
-		notice() {
-			return "苟利国家生死以，岂因祸福避趋之";
-		}
-	},
-	methods: {
-		async getListPage(current = 1, size = 5, params = undefined) {
-			let res = await getList(current, size, params);
-			res = res.data;
-			this.postList = this.postList.concat(res.records || []);
-			this.hasNextPage = res.hasNextPage;
-		},
-		async loadMore() {
-			await this.getListPage(++this.current);
-		},
-	}
+import UserEditBlogCard from "../../../components/userTactic/UserEditBlogCard.vue";
+import {onBeforeMount, ref} from "vue";
+import {getUserTacticList} from "../../../api/user/tactic.js";
+
+let hasNextPage = ref(false);
+let postList = ref([]);
+
+onBeforeMount(async () => {
+	await getListPage();
+});
+
+async function getListPage(current = 1, size = 10) {
+	let res = await getUserTacticList(current, size);
+	res = res.data;
+	postList.value = postList.value.concat(res.records || []);
+	hasNextPage.value = res.hasNextPage;
 }
+
+async function loadMore() {
+	await getListPage(++this.current);
+}
+
 </script>
 
 <style lang="less" scoped>
-
 .quote {
 	border-left: 3px solid #ff6d6d;
 	background-color: #FBFBFB;
@@ -164,4 +143,3 @@ export default {
 
 /******/
 </style>
-

@@ -1,11 +1,9 @@
-<!--文章首页展示的每个小卡片-->
+<!--用户修改攻略展示的每个小卡片-->
 <template>
 	<article class="post post-list">
 		<div class="post-entry">
 			<div class="feature">
-				<router-link :to="`article/${blog.tacticId}`">
-					<img :src="this.blog.imgUrl?this.blog.imgUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"/>
-				</router-link>
+				<img :src="this.blog.imgUrl?this.blog.imgUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"/>
 			</div>
 			<h1 class="entry-title">
 				<router-link :to="`article/${blog.tacticId}`">
@@ -20,7 +18,7 @@
 			<p class="summary">{{ blog.shortMsg }}</p>
 			<footer class="entry-footer">
 				<div class="post-more">
-					<router-link :to="`article/${blog.tacticId}`">
+					<router-link :to="`tactic/edit/${blog.tacticId}`">
 						<i class="iconfont iconfish-li" style="font-size: 25px;"/>
 					</router-link>
 				</div>
@@ -46,7 +44,7 @@
 <script>
 
 export default {
-	name: "BlogCard",
+	name: "UserEditBlogCard",
 	props: ['blog']
 }
 </script>

@@ -63,7 +63,8 @@
 
 		<TacticEdit v-if="editVisible"
 		            v-bind:articleTitleDisable="articleTitleDisable" v-bind:tacticId="form.tacticId"
-		            @close="editVisible=false;this.onLoad(this.page);"/>
+		            @close="editVisible=false;this.onLoad(this.page);"
+		            @save="submitForm"/>
 
 		<!-- 评论管理弹窗 -->
 		<el-dialog
@@ -79,9 +80,19 @@
 </template>
 
 <script>
-import {add, getDetail, getList, remove, removeMany, switchTop, update} from "../../api/system/tactic.js";
+import {
+	add,
+	getDetail,
+	getList,
+	remove,
+	removeMany,
+	saveOrUpdateTactic,
+	switchTop,
+	update
+} from "../../api/system/tactic.js";
 import TacticEdit from "./TacticEdit.vue";
 import CommentMan from "../system/CommentMan.vue";
+import {ElNotification} from "element-plus";
 
 export default {
 	name: "articleMan",
@@ -147,6 +158,16 @@ export default {
 	directives: {},
 	computed: {},
 	methods: {
+		async submitForm(blogForm) {
+			const res = await saveOrUpdateTactic(blogForm)
+			if (res.success) {
+				ElNotification({
+					message: '成功',
+					type: 'success'
+				})
+				this.$emit('close');
+			}
+		},
 		async switchTopStat(tacticId) {
 			let res = switchTop(tacticId);
 			if (res.success) {

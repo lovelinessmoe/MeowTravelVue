@@ -32,6 +32,12 @@
 				<router-link to="/travel/userInfo">{{ this.$store.state.user.userName }}</router-link>
 				<div class="childMenu">
 					<div class="sub-menu">
+						<router-link to="/travel/postTactic">发布攻略</router-link>
+					</div>
+					<div class="sub-menu">
+						<router-link to="/travel/manTactic">管理攻略</router-link>
+					</div>
+					<div class="sub-menu">
 						<a @click="switchUser()">切换账号</a>
 					</div>
 					<div class="sub-menu">
@@ -45,7 +51,6 @@
 			</div>
 		</div>
 	</div>
-
 </template>
 
 <script>

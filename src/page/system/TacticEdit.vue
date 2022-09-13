@@ -37,8 +37,8 @@
 				v-model="blogForm.content"
 				:toolbars="markdownOption"
 				ref=md @imgAdd="imgAdd"
-				@save="submitForm()"/>
-			<el-button type="primary" @click="submitForm()">保存</el-button>
+				@save="this.$emit('save',blogForm);"/>
+			<el-button type="primary" @click="this.$emit('save',blogForm);">保存</el-button>
 			<el-button type="danger" @click="this.$emit('close');">取消</el-button>
 		</el-card>
 	</el-form>
@@ -59,8 +59,7 @@
 
 <script>
 import 'mavon-editor/dist/css/index.css'
-import {getDetail, saveOrUpdateTactic} from "../../api/system/tactic.js";
-import {ElNotification} from 'element-plus'
+import {getDetail} from "../../api/system/tactic.js";
 import CropperImage from "../../components/CropperImage.vue";
 import useUpYun from '../../hooks/useUpYun.js'
 
@@ -133,17 +132,6 @@ export default {
 			 * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
 			 */
 			this.$refs.md.$img2Url(pos, res.data);
-
-		},
-		async submitForm() {
-			const res = await saveOrUpdateTactic(this.blogForm)
-			if (res.success) {
-				ElNotification({
-					message: '成功',
-					type: 'success'
-				})
-				this.$emit('close');
-			}
 		},
 		async getTacticDetail() {
 			if (this.tacticId !== undefined) {

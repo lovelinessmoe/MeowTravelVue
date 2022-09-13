@@ -2,19 +2,27 @@
 <template>
 	<div id="banner" :class="{'home-banner':isHome}">
 		<div :style="{'background-image': `url(${src?src:'https://s2.loli.net/2022/04/05/L7DH4coMPSAKe1a.jpg'})`}"
-		     class="banner-img">
+		     class="banner-img" style="display:flex; justify-content:center; align-items:center;">
 			<template v-if="isHome">
 				<!--左右倾斜-->
 				<div class="slant-left"></div>
 				<div class="slant-right"></div>
 			</template>
+			<template v-if="isHome">
+				<!--搜索-->
+				<search/>
+			</template>
+
 		</div>
 	</div>
 </template>
 
 <script>
+import Search from "./Search.vue";
+
 export default {
 	name: "BannerView",
+	components: {Search},
 	data() {
 		return {
 			websiteInfo: {},

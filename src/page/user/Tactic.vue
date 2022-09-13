@@ -109,11 +109,11 @@
 </template>
 
 <script>
-import Banner from '../components/BannerView.vue'
-import sectionTitle from '../components/SectionTitle.vue'
-import comment from '../components/CommentView.vue'
-import {getBlogDetail} from "../api/tactic.js";
-import {addComment, getComment} from "../api/comment.js";
+import Banner from '../../components/BannerView.vue'
+import sectionTitle from '../../components/SectionTitle.vue'
+import comment from '../../components/CommentView.vue'
+import {getBlogDetail} from "../../api/user/tactic.js";
+import {addComment, getComment} from "../../api/user/comment.js";
 import {ElNotification} from "element-plus";
 
 export default {

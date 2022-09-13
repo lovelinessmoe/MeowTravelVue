@@ -50,7 +50,7 @@
 
 <script>
 import sectionTitle from '../components/SectionTitle.vue'
-import {addComment} from "../api/comment";
+import {addComment} from "../api/user/comment.js";
 import {ElNotification} from "element-plus";
 
 export default {
