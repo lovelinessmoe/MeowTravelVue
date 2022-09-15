@@ -138,8 +138,7 @@ export default {
 		async onLoad() {
 			this.loading = true;
 			let res = await getComment(this.tacticId);
-			const data = res.data;
-			this.data = data;
+			this.data = res.data;
 			this.loading = false;
 			this.selectionClear();
 		}

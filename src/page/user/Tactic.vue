@@ -109,8 +109,8 @@
 </template>
 
 <script>
-import Banner from '../../components/BannerView.vue'
-import sectionTitle from '../../components/SectionTitle.vue'
+import Banner from '../../components/home/BannerView.vue'
+import sectionTitle from '../../components/home/SectionTitle.vue'
 import comment from '../../components/CommentView.vue'
 import {getBlogDetail} from "../../api/user/tactic.js";
 import {addComment, getComment} from "../../api/user/comment.js";

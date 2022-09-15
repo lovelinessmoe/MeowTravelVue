@@ -11,12 +11,12 @@ const routes = [
             {path: 'home', component: () => import('../page/Home.vue'), meta: {title: '首页'}},
             {
                 path: 'manTactic',
-                component: () => import('../page/user/TacticMan/ManTactic.vue'),
+                component: () => import('../page/user/tacticMan/ManTactic.vue'),
                 meta: {title: '管理攻略'}
             },
             {
                 path: 'postTactic',
-                component: () => import('../page/user/TacticMan/PostTactic.vue'),
+                component: () => import('../page/user/tacticMan/PostTactic.vue'),
                 meta: {title: '发布攻略'}
             },
             {path: 'userInfo', component: () => import('../page/user/UserInfo.vue'), meta: {title: '用户信息'}},
@@ -26,8 +26,14 @@ const routes = [
                 meta: {title: '文章', params: 'id'}
             }, {
                 path: 'tactic/edit/:id',
-                component: () => import('../page/user/TacticMan/EditTacticPage.vue'),
+                component: () => import('../page/user/tacticMan/EditTacticPage.vue'),
                 meta: {title: '修改文章', params: 'id'}
+            },
+            {
+                path: 'search/:words',
+                name: 'search',
+                component: () => import('../page/user/search/SearchPage.vue'),
+                meta: {title: '搜索', params: 'words'}
             },
         ]
     },

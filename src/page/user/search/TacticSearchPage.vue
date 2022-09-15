@@ -1,58 +1,48 @@
 <template>
-	<div class="home">
-		<banner isHome="true"></banner>
-		<div class="site-content animate">
-			<!--通知栏-->
-			<div class="notify">
-				<div class="quote">
-					{{ notice }}
-				</div>
-			</div>
-			<!--文章列表-->
-			<div class="site-main">
-				<section-title>推荐</section-title>
-				<template v-for="item in postList" :key="item.tacticId">
-					<BlogCard :blog="item"></BlogCard>
-				</template>
-			</div>
+	<!--文章列表-->
+	<div class="site-main">
+		<template v-for="item in postList" :key="item.tacticId">
+			<BlogCard :blog="item"></BlogCard>
+		</template>
+	</div>
 
-			<!--加载更多-->
-			<div v-show="hasNextPage" class="more">
-				<div class="more-btn" @click="loadMore">More</div>
-			</div>
-		</div>
+	<!--加载更多-->
+	<div v-show="hasNextPage" class="more">
+		<div class="more-btn" @click="loadMore">More</div>
 	</div>
 </template>
 
 <script>
-import {getList} from "../api/user/tactic.js";
-import Banner from "../components/home/BannerView.vue";
-import sectionTitle from '../components/home/SectionTitle.vue'
-import BlogCard from '../components/home/BlogCard.vue'
-import SmallIco from '../components/home/SmallIco.vue'
+import {getList} from "../../../api/user/tactic.js";
+import sectionTitle from "../../../components/home/SectionTitle.vue";
+import BlogCard from "../../../components/home/BlogCard.vue";
+import SmallIco from "../../../components/home/SmallIco.vue";
 
 export default {
-	name: "HomePage",
-	components: {Banner, sectionTitle, BlogCard, SmallIco},
-	props: [],
-	async created() {
-		await this.getListPage();
+	name: "TacticSearchPage",
+	props: ['keys'],
+	components: {sectionTitle, BlogCard, SmallIco},
+	created() {
+		this.getListPage();
+	},
+	watch: {
+		keys(value) {
+			this.current = 1;
+			this.postList = [];
+			this.getListPage();
+		}
 	},
 	data() {
 		return {
 			postList: [],
 			current: 1,
-			hasNextPage: false
+			hasNextPage: false,
 		}
 	},
-	computed: {
-		notice() {
-			return "苟利国家生死以，岂因祸福避趋之";
-		}
-	},
+	computed: {},
 	methods: {
-		async getListPage(current = 1, size = 5, params = undefined) {
-			let res = await getList(current, size, params);
+		async getListPage(current = 1, size = 5) {
+			let res = await getList(current, size, this.keys);
 			res = res.data;
 			this.postList = this.postList.concat(res.records || []);
 			this.hasNextPage = res.hasNextPage;
@@ -162,6 +152,4 @@ export default {
 	}
 }
 
-/******/
 </style>
-

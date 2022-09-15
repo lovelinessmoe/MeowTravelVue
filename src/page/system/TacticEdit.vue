@@ -160,8 +160,5 @@ export default {
 #mavon_editor {
 	z-index: 0;
 	height: 500px;
-
 }
-
-
 </style>

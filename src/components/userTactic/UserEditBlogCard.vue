@@ -18,6 +18,15 @@
 			<p class="summary">{{ blog.shortMsg }}</p>
 			<footer class="entry-footer">
 				<div class="post-more">
+					<el-popconfirm title="真的要删除这篇攻略吗?" @confirm="deleteTacticById">
+						<template #reference>
+							<a style="padding-right: 10px;cursor: pointer;">
+								<el-icon>
+									<CloseBold/>
+								</el-icon>
+							</a>
+						</template>
+					</el-popconfirm>
 					<router-link :to="`tactic/edit/${blog.tacticId}`">
 						<i class="iconfont iconfish-li" style="font-size: 25px;"/>
 					</router-link>
@@ -43,9 +52,17 @@
 
 <script>
 
+import {deleteTactic} from "../../api/user/tactic.js";
+
 export default {
 	name: "UserEditBlogCard",
-	props: ['blog']
+	props: ['blog'],
+	methods: {
+		deleteTacticById() {
+			deleteTactic(this.blog.tacticId);
+			this.$emit("deleteIt");
+		}
+	}
 }
 </script>
 

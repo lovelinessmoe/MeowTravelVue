@@ -67,11 +67,11 @@ onMounted(async () => {
 	// 构造数据
 	let rs = await getUserLocationVisual()
 	locateData.value = rs.data;
-	rs = rs.data
-	let randomCount = rs.length
+	rs = rs.data;
+	let randomCount = rs.length;
 
 	while (randomCount--) {
-		let temp = rs[randomCount]
+		let temp = rs[randomCount];
 		let cityName = temp.city;
 		let cityCenter = mapv.utilCityCenter.getCenterByCityName(cityName);
 		data.push({

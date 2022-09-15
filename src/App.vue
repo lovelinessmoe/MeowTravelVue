@@ -16,7 +16,7 @@
 
 <script>
 import LoadingPage from "./components/LoadingPage.vue";
-import TopBar from "./components/TopBar.vue";
+import TopBar from "./components/topBar/TopBar.vue";
 import TravelPage from "./page/user/TravelPage.vue";
 import FooterView from "./components/FooterView.vue";
 

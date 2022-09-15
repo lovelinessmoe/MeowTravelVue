@@ -1,5 +1,5 @@
 <template>
-	<div style="margin-top: 80px;">
+	<div class="animate" style="margin-top: 80px;">
 		<TacticEdit v-bind:articleTitleDisable="true"
 		            v-bind:tacticId="this.$route.params.id"
 		            @close="this.$router.go(-1);"

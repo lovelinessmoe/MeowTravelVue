@@ -10,9 +10,8 @@
 			</template>
 			<template v-if="isHome">
 				<!--搜索-->
-				<search/>
+				<search v-bind:need-suggest="true"/>
 			</template>
-
 		</div>
 	</div>
 </template>

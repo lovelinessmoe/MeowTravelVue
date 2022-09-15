@@ -3,7 +3,7 @@
 	     @click.stop="mobileShow=false">
 		<div class="site-logo">
 			<router-link to="/travel/home">
-				<img alt="" src="../assets/img/logo.svg">
+				<img alt="" src="../../assets/img/logo.svg">
 			</router-link>
 		</div>
 		<div class="menus-btn" @click.stop="mobileShow=!mobileShow">
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import HeaderSearch from "../components/HeaderSearch.vue";
-import {removeUser} from "../utils/token";
+import HeaderSearch from "./HeaderSearch.vue";
+import {removeUser} from "../../utils/token.js";
 
 export default {
 	name: "TopBar",

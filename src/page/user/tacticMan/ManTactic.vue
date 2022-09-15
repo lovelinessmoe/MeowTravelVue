@@ -5,8 +5,8 @@
 
 			<!--文章列表-->
 			<div class="site-main">
-				<template v-for="item in postList" :key="item.tacticId">
-					<UserEditBlogCard :blog="item"/>
+				<template v-for="(item,index) in postList" :key="item.tacticId">
+					<UserEditBlogCard :blog="item" @deleteIt="deleteTactic"/>
 				</template>
 			</div>
 
@@ -26,10 +26,17 @@ import {getUserTacticList} from "../../../api/user/tactic.js";
 
 let hasNextPage = ref(false);
 let postList = ref([]);
+let current = ref(1);
 
 onBeforeMount(async () => {
 	await getListPage();
 });
+
+function deleteTactic() {
+	current.value = 1;
+	postList.value = [];
+	getListPage();
+}
 
 async function getListPage(current = 1, size = 10) {
 	let res = await getUserTacticList(current, size);
@@ -39,7 +46,7 @@ async function getListPage(current = 1, size = 10) {
 }
 
 async function loadMore() {
-	await getListPage(++this.current);
+	await getListPage(++current.value);
 }
 
 </script>

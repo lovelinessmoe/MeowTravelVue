@@ -3,12 +3,12 @@
 	<article class="post post-list">
 		<div class="post-entry">
 			<div class="feature">
-				<router-link :to="`article/${blog.tacticId}`">
+				<router-link :to="`/travel/article/${blog.tacticId}`">
 					<img :src="this.blog.imgUrl?this.blog.imgUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"/>
 				</router-link>
 			</div>
 			<h1 class="entry-title">
-				<router-link :to="`article/${blog.tacticId}`">
+				<router-link :to="`/travel/article/${blog.tacticId}`">
 					<span v-if="blog.isTop" style="color:#ff6d6d;font-weight:600">[置顶] </span>
 					{{ blog.title }}
 				</router-link>
@@ -20,7 +20,7 @@
 			<p class="summary">{{ blog.shortMsg }}</p>
 			<footer class="entry-footer">
 				<div class="post-more">
-					<router-link :to="`article/${blog.tacticId}`">
+					<router-link :to="`/travel/article/${blog.tacticId}`">
 						<i class="iconfont iconfish-li" style="font-size: 25px;"/>
 					</router-link>
 				</div>

@@ -4,6 +4,7 @@ import {getUser} from '../utils/token'
 const state = {
     loading: false,
     user: undefined,
+    location: {},
 }
 const mutations = {
     SET_LOADING: (state, v) => {

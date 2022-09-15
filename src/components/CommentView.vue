@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import sectionTitle from '../components/SectionTitle.vue'
+import sectionTitle from './home/SectionTitle.vue'
 import {addComment} from "../api/user/comment.js";
 import {ElNotification} from "element-plus";
 

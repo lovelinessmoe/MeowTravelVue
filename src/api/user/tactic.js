@@ -1,11 +1,11 @@
 import request from '../../utils/request.js'
 
-export const getList = (current, size, params) => {
+export const getList = (current, size, keys) => {
     return request({
         url: 'user/tactic/list',
         method: 'get',
         params: {
-            ...params,
+            key: keys,
             current,
             size,
         }
@@ -42,6 +42,16 @@ export const editTactic = (tactic) => {
         url: 'user/tactic/editTactic',
         method: 'post',
         data: tactic,
+    })
+}
+
+export const deleteTactic = (tacticId) => {
+    return request({
+        url: 'user/tactic/remove',
+        method: 'post',
+        params: {
+            tacticId
+        }
     })
 }
 
