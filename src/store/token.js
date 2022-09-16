@@ -1,4 +1,4 @@
-import store from '../store'
+import store from './index.js'
 
 /**
  * 获取登陆用户

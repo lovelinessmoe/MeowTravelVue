@@ -17,6 +17,7 @@
 import {getSearchSuggestion} from "../../api/user/baiduMap.js";
 import {ElNotification} from "element-plus";
 import store from "../../store/index.js";
+import {setUserLocation} from "../../store/location.js";
 
 export default {
 	name: "Search",
@@ -32,7 +33,7 @@ export default {
 		searchValue(value) {
 			//需要搜索建议
 			if (this.needSuggest) {
-				if (value === '') {
+				if (value === '' || store.state.location === undefined) {
 					this.suggestions = [];
 				} else {
 					let region = store.state.location.address.city;
@@ -55,7 +56,8 @@ export default {
 			let geolocation = new BMapGL.Geolocation();
 			geolocation.getCurrentPosition(function (r) {
 				if (this.getStatus() === 0) {
-					store.state.location = r;
+					setUserLocation(r)
+					// store.state.location = r;
 				} else if (this.getStatus() === 8) {
 					that.getUserLocation();
 				} else {

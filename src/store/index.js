@@ -1,10 +1,11 @@
 import {createStore} from 'vuex'
-import {getUser} from '../utils/token'
+import {getUser} from './token.js'
+import {getUserLocation} from "./location.js";
 
 const state = {
     loading: false,
     user: undefined,
-    location: {},
+    location: undefined,
 }
 const mutations = {
     SET_LOADING: (state, v) => {
@@ -12,6 +13,9 @@ const mutations = {
     },
     async REFRESH_USER(state) {
         state.user = await getUser();
+    },
+    async REFRESH_USER_LOCATION(state) {
+        state.location = await getUserLocation();
     }
 }
 const actions = {}

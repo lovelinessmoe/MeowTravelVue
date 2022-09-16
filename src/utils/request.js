@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {ElNotification} from 'element-plus'
-import {removeUser} from './token'
+import {removeUser} from '../store/token.js'
 import store from '../store'
 import router from '../router'
 

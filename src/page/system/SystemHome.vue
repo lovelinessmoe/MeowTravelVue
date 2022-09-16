@@ -32,16 +32,7 @@ import {getUserLocationVisual} from "../../api/system/visual.js";
 let locateData = ref([]);
 
 onMounted(async () => {
-	// 百度地图API功能
-	/*let map = new BMapGL.Map("map_container");
-	map.centerAndZoom(new BMapGL.Point(116.404, 39.915), 11);
-	let local = new BMapGL.LocalSearch(map, {
-		renderOptions: {map: map}
-	});
-	local.search("景点");*/
-
-
-	var map = initMap({
+	let map = initMap({
 		tilt: 30,
 		heading: 0,
 		center: [100, 31],

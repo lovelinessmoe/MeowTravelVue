@@ -4,13 +4,13 @@
 		<el-tabs v-model="activeName" class="demo-tabs" style="padding-top: 50px;"
 		         @tab-click="handleClick">
 			<el-tab-pane label="攻略" name="tactic">
-				<tactic-search-page v-bind:keys="key"/>
+				<tactic-search-page v-if="activeName==='tactic'" v-bind:keys="key"/>
 			</el-tab-pane>
 			<el-tab-pane label="景点" name="sights">
-				<sights-search-page/>
+				<sights-search-page v-if="activeName==='sights'" v-bind:keys="key"/>
 			</el-tab-pane>
 			<el-tab-pane label="酒店" name="hotel">
-
+				<hotel-search-page v-if="activeName==='hotel'" v-bind:keys="key"/>
 			</el-tab-pane>
 		</el-tabs>
 
@@ -22,13 +22,16 @@
 import Search from "../../../components/home/Search.vue";
 import TacticSearchPage from "./TacticSearchPage.vue";
 import SightsSearchPage from "./SightsSearchPage.vue";
+import HotelSearchPage from "./HotelSearchPage.vue";
 
 export default {
 	name: "SearchPage",
-	components: {SightsSearchPage, TacticSearchPage, Search},
+	components: {HotelSearchPage, SightsSearchPage, TacticSearchPage, Search},
 	props: [],
 	created() {
-		this.key = this.$route.params.words
+		this.key = this.$route.params.words;
+		// 更新vuex的用户位置状态
+		this.$store.commit('REFRESH_USER_LOCATION');
 	},
 	data() {
 		return {

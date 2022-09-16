@@ -93,7 +93,7 @@ import {onBeforeMount, ref} from "vue";
 import authCheck from '../../hooks/useCaptcha.js'
 import {ElNotification} from "element-plus";
 // import {logout} from "../../api/login.js";
-import {removeUser} from "../../utils/token.js";
+import {removeUser} from "../../store/token.js";
 import router from '../../router/index.js'
 import useUpYun from "../../hooks/useUpYun.js";
 

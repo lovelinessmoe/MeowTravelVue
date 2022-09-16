@@ -57,7 +57,7 @@
 <script>
 import {captcha, getRegisterEmail, login, register} from '../api/login'
 import {ElNotification} from 'element-plus'
-import {setUser} from "../utils/token";
+import {setUser} from "../store/token.js";
 
 export default {
 	name: "LoginComponent",

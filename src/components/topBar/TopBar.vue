@@ -55,7 +55,7 @@
 
 <script>
 import HeaderSearch from "./HeaderSearch.vue";
-import {removeUser} from "../../utils/token.js";
+import {removeUser} from "../../store/token.js";
 
 export default {
 	name: "TopBar",
