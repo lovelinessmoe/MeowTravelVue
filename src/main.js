@@ -15,6 +15,7 @@ import * as ElIconModules from '@element-plus/icons-vue'
 import request from "./utils/request.js";
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import BaiduMap from 'vue-baidu-map-3x'
 
 const app = createApp(App)
 app.use(store)
@@ -32,4 +33,12 @@ for (let iconName in ElIconModules) {
     app.component(iconName, ElIconModules[iconName])
 }
 app.config.silent = true
+
+app.use(BaiduMap, {
+    // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+    ak: 'F4qaBc4xq7XxzmgBh72Vf4duqRYQ75Wb',
+    // v:'2.0',  // 默认使用3.0
+    // type: 'WebGL' // ||API 默认API  (使用此模式 BMap=BMapGL)
+});
+
 app.mount('#app')

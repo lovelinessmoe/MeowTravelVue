@@ -8,11 +8,11 @@ export const getSearchSuggestion = (query, region) => {
     })
 }
 
-export const searchSights = (query, location) => {
+export const searchSights = (query, location, region) => {
     return request({
         url: 'map/map/search',
         method: 'get',
-        params: {query, location, tag: '景点'}
+        params: {query, location, tag: '景点', region}
     })
 }
 

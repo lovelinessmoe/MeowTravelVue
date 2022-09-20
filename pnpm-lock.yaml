@@ -16,6 +16,7 @@ specifiers:
   sass: ^1.54.8
   vite: ^3.0.0
   vue: ^3.2.37
+  vue-baidu-map-3x: ^1.0.21
   vue-cropper: ^1.0.5
   vue-router: ^4.1.2
   vuex: ^4.0.2
@@ -33,6 +34,7 @@ dependencies:
   node-sass: registry.npmmirror.com/node-sass/7.0.1
   qs: registry.npmmirror.com/qs/6.11.0
   vue: registry.npmmirror.com/vue/3.2.37
+  vue-baidu-map-3x: registry.npmmirror.com/vue-baidu-map-3x/1.0.21
   vue-cropper: registry.npmmirror.com/vue-cropper/1.0.5
   vuex: registry.npmmirror.com/vuex/4.0.2_vue@3.2.37
   webpack: registry.npmmirror.com/webpack/5.74.0
@@ -833,6 +835,44 @@ packages:
     version: 2.2.0
     engines: { node: '>=8' }
     dev: true
+
+  registry.npmmirror.com/bmaplib.curveline/1.0.0:
+    resolution: { integrity: sha512-9wcFMVhiYxNPqpvsLDAADn3qDhNzXp2mA6VyHSHg2XOAgSooC7ZiujdFhy0sp+0QYjTfJ/MjmLuNoUg2HHxH4Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bmaplib.curveline/-/bmaplib.curveline-1.0.0.tgz }
+    name: bmaplib.curveline
+    version: 1.0.0
+    dev: false
+
+  registry.npmmirror.com/bmaplib.distancetool/1.0.2:
+    resolution: { integrity: sha512-EvxMnQRH6xM036zx5OLPyTg5tMCTbFBuGTTHOtExLy2/T0X6v5Va0YE7c3IPm/a/Eo5V/ynYpOLOLZbRY8ccyA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bmaplib.distancetool/-/bmaplib.distancetool-1.0.2.tgz }
+    name: bmaplib.distancetool
+    version: 1.0.2
+    dev: false
+
+  registry.npmmirror.com/bmaplib.heatmap/1.0.4:
+    resolution: { integrity: sha512-rmhqUARBpUSJ9jXzUI2j7dIOqnc38bqubkx/8a349U2qtw/ulLUwyzRD535OrA8G7w5cz4aPKm6/rNvUAarg/Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bmaplib.heatmap/-/bmaplib.heatmap-1.0.4.tgz }
+    name: bmaplib.heatmap
+    version: 1.0.4
+    dev: false
+
+  registry.npmmirror.com/bmaplib.lushu/1.0.7:
+    resolution: { integrity: sha512-LVvgpESPii6xGxyjnQjq8u+ic4NjvhdCPV/RiSS/PGTUdZKeTDS7prSpleJLZH3ES0+oc0gYn8bw0LtPYUSz2w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bmaplib.lushu/-/bmaplib.lushu-1.0.7.tgz }
+    name: bmaplib.lushu
+    version: 1.0.7
+    dev: false
+
+  registry.npmmirror.com/bmaplib.markerclusterer/1.0.13:
+    resolution: { integrity: sha512-VrLyWSiuDEVNi0yUfwOhFQ6z1oEEHS4w36GNu3iASu6p52QIx9uAXMUkuSCHReNR0bj2Cp9SA1dSx5RpojXajQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bmaplib.markerclusterer/-/bmaplib.markerclusterer-1.0.13.tgz }
+    name: bmaplib.markerclusterer
+    version: 1.0.13
+    dependencies:
+      bmaplib.texticonoverlay: registry.npmmirror.com/bmaplib.texticonoverlay/1.0.2
+    dev: false
+
+  registry.npmmirror.com/bmaplib.texticonoverlay/1.0.2:
+    resolution: { integrity: sha512-4ZTWr4ZP3B6qEWput5Tut16CfZgII38YwM3bpyb4gFTQyORlKYryFp9WHWrwZZaHlOyYDAXG9SX0hka43jTADg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bmaplib.texticonoverlay/-/bmaplib.texticonoverlay-1.0.2.tgz }
+    name: bmaplib.texticonoverlay
+    version: 1.0.2
+    dev: false
 
   registry.npmmirror.com/brace-expansion/1.1.11:
     resolution: { integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/brace-expansion/-/brace-expansion-1.1.11.tgz }
@@ -3512,6 +3552,12 @@ packages:
       source-map-support: registry.npmmirror.com/source-map-support/0.5.21
     dev: false
 
+  registry.npmmirror.com/tiny-emitter/2.1.0:
+    resolution: { integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz }
+    name: tiny-emitter
+    version: 2.1.0
+    dev: false
+
   registry.npmmirror.com/to-fast-properties/2.0.0:
     resolution: { integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz }
     name: to-fast-properties
@@ -3696,6 +3742,21 @@ packages:
       fsevents: registry.npmmirror.com/fsevents/2.3.2
     dev: true
 
+  registry.npmmirror.com/vue-baidu-map-3x/1.0.21:
+    resolution: { integrity: sha512-BZgc6lXa0MQ4fE8tyAW4u7r6HTxnQ8PeiDPaHClZ0BN6813IBaem4LlH3Oj0aZK/Aloo9JWSyWIzvS30JRBpXg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-baidu-map-3x/-/vue-baidu-map-3x-1.0.21.tgz }
+    name: vue-baidu-map-3x
+    version: 1.0.21
+    dependencies:
+      bmaplib.curveline: registry.npmmirror.com/bmaplib.curveline/1.0.0
+      bmaplib.distancetool: registry.npmmirror.com/bmaplib.distancetool/1.0.2
+      bmaplib.heatmap: registry.npmmirror.com/bmaplib.heatmap/1.0.4
+      bmaplib.lushu: registry.npmmirror.com/bmaplib.lushu/1.0.7
+      bmaplib.markerclusterer: registry.npmmirror.com/bmaplib.markerclusterer/1.0.13
+      tiny-emitter: registry.npmmirror.com/tiny-emitter/2.1.0
+      vue: registry.npmmirror.com/vue/3.2.37
+      vue-router: registry.npmmirror.com/vue-router/4.1.2_vue@3.2.37
+    dev: false
+
   registry.npmmirror.com/vue-cropper/1.0.5:
     resolution: { integrity: sha512-D4XXdqWmMWRLOIV9LIh7/mkH6OBOMQDFbRjwntkxmAtxOtwpC9U5ZZ6lSXw5F5cbd4g8znDjk6MuCwIL+fZSrA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-cropper/-/vue-cropper-1.0.5.tgz }
     name: vue-cropper
@@ -3730,7 +3791,6 @@ packages:
     dependencies:
       '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api/6.2.1
       vue: registry.npmmirror.com/vue/3.2.37
-    dev: true
 
   registry.npmmirror.com/vue/3.2.37:
     resolution: { integrity: sha512-bOKEZxrm8Eh+fveCqS1/NkG/n6aMidsI6hahas7pa0w/l7jkbssJVsRhVDs07IdDq7h9KHswZOgItnwJAgtVtQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue/-/vue-3.2.37.tgz }
