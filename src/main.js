@@ -42,3 +42,14 @@ app.use(BaiduMap, {
 });
 
 app.mount('#app')
+
+
+export function delayer(action, delay = 1200) {
+    let timer = -1;
+    return nv => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            action(nv);
+        }, delay);
+    };
+}

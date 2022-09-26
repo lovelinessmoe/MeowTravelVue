@@ -13,13 +13,12 @@
 				<hotel-search-page v-if="activeName==='hotel'" v-bind:keys="key"/>
 			</el-tab-pane>
 		</el-tabs>
-
 	</div>
 </template>
 
 <script>
 
-import Search from "../../../components/home/Search.vue";
+import Search from "../../../components/search/Search.vue";
 import TacticSearchPage from "./TacticSearchPage.vue";
 import SightsSearchPage from "./SightsSearchPage.vue";
 import HotelSearchPage from "./HotelSearchPage.vue";
@@ -32,6 +31,12 @@ export default {
 		this.key = this.$route.params.words;
 		// 更新vuex的用户位置状态
 		this.$store.commit('REFRESH_USER_LOCATION');
+	},
+	watch: {
+		// 同一路由刷新
+		'$route'(to, from) {
+			this.$router.go(0);
+		}
 	},
 	data() {
 		return {

@@ -9,7 +9,7 @@
 		</el-row>
 	</div>
 	<baidu-map :center="{lng: location.lng, lat: location.lat}" :scroll-wheel-zoom="true"
-	           :zoom="15" class="map"
+	           :zoom="10" class="map"
 	           style="height: 800px;"
 	>
 		<!--	           mapType="BMAP_HYBRID_MAP"-->
@@ -31,20 +31,18 @@
 	<el-dialog
 		v-model="detailModel"
 		title="查看地点详情">
-		<el-card>
-
-		</el-card>
-
+		<PoiDetail v-if="detailModel" :poi-id="detailId"></PoiDetail>
 	</el-dialog>
-
 </template>
 
 <script>
 import {searchSights} from "../../../api/user/baiduMap.js";
 import store from "../../../store/index.js";
+import PoiDetail from "../../../components/search/PoiDetail.vue";
 
 export default {
 	name: "SightsSearchPage",
+	components: {PoiDetail},
 	props: ['keys'],
 	data() {
 		return {
@@ -54,23 +52,33 @@ export default {
 			},
 			locationInfo: [],
 			infoItem: undefined,
-			detailModel: false
+			detailModel: false,
+			detailId: undefined,
 		};
 	},
+	watch: {
+		async keys(value) {
+			let searchRes = await this.searchSightsByKey(this.keys);
+			this.locationInfo = searchRes.data;
+		}
+	},
 	async created() {
-		this.location.lat = store.state.location.point.lat
-		this.location.lng = store.state.location.point.lng
-		let region = store.state.location.address.city
-		let searchRes = await searchSights("", this.location.lat + "," + this.location.lng, region);
+		let searchRes = await this.searchSightsByKey(this.keys);
 		this.locationInfo = searchRes.data;
-		console.log(searchRes);
 	},
 	async mounted() {
 
 	},
 	methods: {
+		searchSightsByKey(key) {
+			this.location.lat = store.state.location.point.lat
+			this.location.lng = store.state.location.point.lng
+			let region = store.state.location.address.city
+			return searchSights(key, this.location.lat + "," + this.location.lng, region);
+		},
 		async seeLocationDetail(uid) {
-			console.log(uid)
+			this.detailId = uid;
+			this.detailModel = true
 		}
 	}
 }

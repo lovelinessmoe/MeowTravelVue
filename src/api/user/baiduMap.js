@@ -24,3 +24,18 @@ export const searchHotel = (query, location) => {
     })
 }
 
+export const getPoiDetailById = (uid) => {
+    return request({
+        url: 'map/map/getDetailById/' + uid,
+        method: 'get'
+    })
+}
+export const getBaiDuPoiSuggestApi = (key) => {
+    return request({
+        url: 'map/baidu/getBaiDuPoiSuggestApi',
+        method: 'get',
+        params: {
+            key
+        }
+    })
+}

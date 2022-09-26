@@ -4,13 +4,20 @@
 		       @input="$emit('update:searchValue', $event.target.value)" @keyup.enter="search"/>
 		<div v-if="suggestions.length!== 0 "
 		     style="opacity: 0.8;border-radius: 50px;background-color: #c8edd9;
-		     position: absolute;width: 400px;">
+		     position: absolute;width: 400px;z-index: 90;">
 			<div v-for="(item, index) in suggestions"
+			     @click="openDetailInfo(item.uid)"
 			     :key="index" style="padding-bottom: 5px;padding-top: 5px;">
 				<span style="padding-left: 45px;font-size: 20px;">{{ item.name }}</span>
 			</div>
 		</div>
 	</div>
+
+	<el-dialog
+		v-model="detailModel"
+		title="查看地点详情">
+		<PoiDetail v-if="detailModel" :poi-id="detailId"></PoiDetail>
+	</el-dialog>
 </template>
 
 <script>
@@ -18,14 +25,18 @@ import {getSearchSuggestion} from "../../api/user/baiduMap.js";
 import {ElNotification} from "element-plus";
 import store from "../../store/index.js";
 import {setUserLocation} from "../../store/location.js";
+import PoiDetail from "./PoiDetail.vue";
 
 export default {
 	name: "Search",
+	components: {PoiDetail},
 	data() {
 		return {
 			// searchValue: '',
 			suggestions: [],
 			region: '',
+			detailModel: false,
+			detailId: undefined,
 		};
 	},
 	props: ['needSuggest', 'searchValue'],
@@ -67,6 +78,10 @@ export default {
 					});
 				}
 			});
+		},
+		openDetailInfo(uid) {
+			this.detailId = uid;
+			this.detailModel = true
 		}
 	},
 	computed: {}

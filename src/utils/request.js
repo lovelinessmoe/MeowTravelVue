@@ -5,7 +5,10 @@ import store from '../store'
 import router from '../router'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:9201/', timeout: 10000
+    baseURL: 'http://localhost:9201/',
+    // baseURL: 'https://2420n0969k.zicp.fun/',
+    // baseURL: 'http://192.168.64.133:9201/',
+    timeout: 10000
 })
 
 // request拦截器

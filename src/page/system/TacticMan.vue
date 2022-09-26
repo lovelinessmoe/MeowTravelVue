@@ -56,7 +56,10 @@
 			</template>
 			<!--            自定义列-->
 			<template #isTop="{row}">
-				<el-switch v-model="row.isTop" @change="switchTopStat(row.tacticId)"/>
+				<el-switch v-model="row.isTop"
+				           :active-value="1"
+				           :inactive-value="0"
+				           @change="switchTopStat(row.tacticId)"/>
 			</template>
 		</avue-crud>
 
@@ -169,12 +172,14 @@ export default {
 			}
 		},
 		async switchTopStat(tacticId) {
-			let res = switchTop(tacticId);
-			if (res.success) {
-				this.$message({
-					type: "success",
-					message: "操作成功!"
-				});
+			if (tacticId !== undefined) {
+				let res = switchTop(tacticId);
+				if (res.success) {
+					this.$message({
+						type: "success",
+						message: "操作成功!"
+					});
+				}
 			}
 		},
 		async delSelection() {

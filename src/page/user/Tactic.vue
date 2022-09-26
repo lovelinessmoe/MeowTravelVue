@@ -9,10 +9,15 @@
 					<header class="entry-header">
 						<!-- 标题输出 -->
 						<h1 class="entry-title">{{ blog.title }}</h1>
+
 						<hr>
 						<div class="breadcrumbs">
-							<div id="crumbs">最后更新时间：{{ this.$moment(blog.createTime).format('YYYY年MM月DD日') }}
-							</div>
+							<span id="crumbs">
+								最后更新时间：{{ this.$moment(blog.createTime).format('YYYY年MM月DD日') }}
+							</span>
+							<el-button text @click="this.$router.push({name: 'search', params: {words: blog.uid}});">
+								查看同一地点攻略
+							</el-button>
 						</div>
 					</header>
 					<!-- 正文输出 -->
@@ -30,32 +35,15 @@
 					<!-- 文章底部 -->
 					<section-title>
 						<footer class="post-footer">
-							<!-- 阅读次数 -->
 							<div class="post-like">
+								<span v-if="blog.uid">
+									你觉得这个景点怎么样
+									<el-rate v-model="rate_val" allow-half @change="submitRate"/>
+								</span>
+								<!-- 阅读次数 -->
 								<i class="iconfont iconeyes"></i>
 								<span class="count">{{ blog.viewsCount }}</span>
 							</div>
-							<!-- 分享按钮 -->
-							<!--                        <div class="post-share">-->
-							<!--                            <ul class="sharehidden">-->
-							<!--                                <li><a href="http://qr.liantu.com/api.php?text=https://zhebk.cn/Web/gongan.html"-->
-							<!--                                       onclick="window.open(this.href, 'renren-share', 'width=490,height=700');return false;"-->
-							<!--                                       class="s-weixin" target="_blank" rel="nofollow noopener noreferrer"><img src="https://cdn.zhebk.cn/usr/themes/Akina/images/wechat.png"></a></li>-->
-							<!--                                <li>-->
-							<!--                                    <a href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://zhebk.cn/Web/gongan.html/&amp;title=公安联网备案记录"-->
-							<!--                                       onclick="window.open(this.href, 'weibo-share', 'width=730,height=500');return false;"-->
-							<!--                                       class="s-qq" target="_blank" rel="nofollow noopener noreferrer"><img src="https://cdn.zhebk.cn/usr/themes/Akina/images/qzone.png"></a></li>-->
-							<!--                                <li>-->
-							<!--                                    <a href="http://service.weibo.com/share/share.php?url=https://zhebk.cn/Web/gongan.html/&amp;title=公安联网备案记录"-->
-							<!--                                       onclick="window.open(this.href, 'weibo-share', 'width=550,height=235');return false;"-->
-							<!--                                       class="s-sina" target="_blank" rel="nofollow noopener noreferrer"><img src="https://cdn.zhebk.cn/usr/themes/Akina/images/sina.png"></a></li>-->
-							<!--                                <li>-->
-							<!--                                    <a href="http://shuo.douban.com/!service/share?https://zhebk.cn/Web/gongan.html/&amp;title=公安联网备案记录"-->
-							<!--                                       onclick="window.open(this.href, 'renren-share', 'width=490,height=600');return false;"-->
-							<!--                                       class="s-douban" target="_blank" rel="nofollow noopener noreferrer"><img src="https://cdn.zhebk.cn/usr/themes/Akina/images/douban.png"></a></li>-->
-							<!--                            </ul>-->
-							<!--                            <i class="iconfont show-share"></i>-->
-							<!--                        </div>-->
 							<!-- 赞助按钮 -->
 							<div class="donate" @click="showDonate=!showDonate">
 								<span>赏</span>
@@ -67,11 +55,6 @@
 										<img src="http://q1.qlogo.cn/g?b=qq&nk=1695560542&s=640">
 										<p>支付宝</p></li>
 								</ul>
-							</div>
-							<!-- 文章标签 -->
-							<div class="post-tags">
-								<i class="iconfont iconcategory"></i>
-								<router-link to="/category/web">Web</router-link>
 							</div>
 						</footer>
 					</section-title>
@@ -115,6 +98,7 @@ import comment from '../../components/CommentView.vue'
 import {getBlogDetail} from "../../api/user/tactic.js";
 import {addComment, getComment} from "../../api/user/comment.js";
 import {ElNotification} from "element-plus";
+import {getPoiRate, submitPoiRate} from "../../api/user/user_rate_poi.js";
 
 export default {
 	name: 'Tactic',
@@ -129,7 +113,8 @@ export default {
 				level: '0',
 				pid: '0',
 			},
-			commentEdit: false
+			commentEdit: false,
+			rate_val: null
 		}
 	},
 	components: {
@@ -145,6 +130,9 @@ export default {
 		async getBlog() {
 			let res = await getBlogDetail(this.$route.params.id);
 			this.blog = res.data;
+			if (this.blog.uid != null) {
+				await this.getRate();
+			}
 		},
 		async submitReply() {
 			if (this.$store.state.user) {
@@ -163,6 +151,13 @@ export default {
 				})
 			}
 		},
+		submitRate(val) {
+			submitPoiRate(val, this.blog.uid);
+		},
+		async getRate() {
+			let res = await getPoiRate(this.blog.uid);
+			this.rate_val = res.data;
+		}
 	},
 	mounted() {
 		this.$store.commit('SET_LOADING', false);

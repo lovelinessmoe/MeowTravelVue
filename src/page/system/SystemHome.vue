@@ -6,7 +6,6 @@
 					<div slot="header" class="clearfix">城市注册人数</div>
 					<div v-for="(item, index) in locateData"
 					     :key="index"
-					     :class="{last : index + 1 == locateData.length}"
 					     class="list">
 						<span :class="'index'+(index+1)" class="index">{{ index + 1 }}</span>
 						<!-- 没有统计时占空位 -->

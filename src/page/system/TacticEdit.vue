@@ -1,15 +1,33 @@
 <template>
 	<el-form label-position="left" label-width="80px"
-	         size="default" style="height: 700px;" @submit.prevent>
+	         size="default"
+	         style="height: 700px;" @submit.prevent>
 		<el-card body-style="height: 100%" class="box-card" shadow="always" style="height: 100%">
 			<template #header>
 				<div class="card-header">
 					<el-row>
-						<el-col :span="20" class="grid-cell">
+						<el-col :span="10" class="grid-cell">
 							<el-form-item label="以后想用来访问的地址" label-width="auto" prop="">
 								<el-input v-model="blogForm.tacticId" :disabled="articleTitleDisable" clearable
 								          type="text"></el-input>
 							</el-form-item>
+						</el-col>
+						<el-col :span="10" class="grid-cell">
+							<el-form-item label="物理地点" label-width="auto" prop="">
+								<el-autocomplete
+									v-model="blogForm.uid_temp"
+									:fetch-suggestions="getBaiDuPoiSuggest"
+									placeholder="Please input"
+									@select="handleSelect">
+
+									<template #default="{ item }">
+										<div class="value">{{ item.name }}</div>
+										<span class="link">{{ item.address }}</span>
+									</template>
+								</el-autocomplete>
+
+							</el-form-item>
+
 						</el-col>
 						<el-col :span="4" class="grid-cell">
 							<el-button style="width: 100%;" type="primary" @click="uploadPicture('flagImg')">
@@ -37,6 +55,7 @@
 				v-model="blogForm.content"
 				:toolbars="markdownOption"
 				ref=md @imgAdd="imgAdd"
+				style="z-index: 0;height: 500px;width: 100%;"
 				@save="this.$emit('save',blogForm);"/>
 			<el-button type="primary" @click="this.$emit('save',blogForm);">保存</el-button>
 			<el-button type="danger" @click="this.$emit('close');">取消</el-button>
@@ -62,7 +81,7 @@ import 'mavon-editor/dist/css/index.css'
 import {getDetail} from "../../api/system/tactic.js";
 import CropperImage from "../../components/CropperImage.vue";
 import useUpYun from '../../hooks/useUpYun.js'
-
+import {getBaiDuPoiSuggestApi} from "../../api/user/baiduMap.js";
 
 export default {
 	name: "TacticEdit",
@@ -81,6 +100,9 @@ export default {
 				tacticId: '',
 				title: '',
 				shortMsg: '',
+				uid: '',
+				// 搜索的Key
+				uid_temp: ''
 			},
 			// 配置参数
 			markdownOption: {
@@ -151,14 +173,25 @@ export default {
 				this.blogForm.imgUrl = res.data;
 				this.cropperModel = false;
 			}
+		},
+		async getBaiDuPoiSuggest(queryString) {
+			let res = await getBaiDuPoiSuggestApi(queryString);
+			return res.data;
+		},
+		handleSelect(item) {
+			this.blogForm.uid = item.uid;
+			this.blogForm.uid_temp = item.name;
 		}
 	},
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 #mavon_editor {
-	z-index: 0;
-	height: 500px;
+	img {
+		position: static;
+		height: auto;
+		width: auto;
+	}
 }
 </style>

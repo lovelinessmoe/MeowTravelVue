@@ -49,6 +49,11 @@ export default function () {
         return upLoadUpImg(file, uri);
     }
 
-    return {uploadAvatarImg, uploadArticleImg, uploadArticleInnerImg}
+    async function uploadPoiImg(file, uid) {
+        let uri = "/Travel/poi/" + uid + ".png";
+        return upLoadUpImg(file, uri);
+    }
+
+    return {uploadAvatarImg, uploadArticleImg, uploadArticleInnerImg, uploadPoiImg}
 }
 

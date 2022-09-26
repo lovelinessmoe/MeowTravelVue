@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Search from "./Search.vue";
+import Search from "../search/Search.vue";
 
 export default {
 	name: "BannerView",

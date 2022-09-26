@@ -55,6 +55,7 @@ const routes = [
             {path: 'home', component: () => import('../page/system/SystemHome.vue')},
             {path: 'userMan', component: () => import('../page/system/UserMan.vue'), meta: {title: '用户管理'}},
             {path: 'tacticMan', component: () => import('../page/system/TacticMan.vue'), meta: {title: '攻略管理'}},
+            {path: 'poiMan', component: () => import('../page/system/BaiduPoiMan.vue'), meta: {title: '景点管理'}},
         ]
     },
 ]

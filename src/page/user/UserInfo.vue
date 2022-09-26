@@ -2,45 +2,58 @@
 	<div class="user-info">
 		<div class="site-content">
 			<div class="content-warp">
-				<el-form label-position="left" label-width="80px"
-				         size="default" style="height: 100%" @submit.prevent>
-					<el-card class="box-card">
-						<template #header>
-							<div class="card-header">
-								<div style="">
-									<span>个人资料修改:{{ user.userName }}</span>
-									<el-button circle icon="Check" style="float:right;" type="success"
-									           @click="userCheckModel = true;"/>
-									<div style="clear:both;"></div>
+				<!--推荐景点-->
+				<div>
+					<h1 style="font-size: 33px;">猜你想去</h1>
+					<el-divider/>
+					<div style="display: flex;width: 100%;flex-wrap: wrap;justify-content: space-between;">
+						<PoiDetail v-for="item in recommendList"
+						           :poi="item" style="flex: 0 0 32%;border-radius: 10px;margin-bottom: 10px;"/>
+					</div>
+				</div>
+				<div style="margin-top: 20px;">
+					<h1 style="font-size: 33px;">个人信息</h1>
+					<el-divider/>
+					<el-form label-position="left" label-width="80px"
+					         size="default" style="height: 100%" @submit.prevent>
+						<el-card class="box-card">
+							<template #header>
+								<div class="card-header">
+									<div style="">
+										<span>个人资料修改:{{ user.userName }}</span>
+										<el-button circle icon="Check" style="float:right;" type="success"
+										           @click="userCheckModel = true;"/>
+										<div style="clear:both;"></div>
+									</div>
 								</div>
+							</template>
+							<div>
+								<el-row>
+									<el-col :md="8" :sm="10" :xs="24" class="grid-cell">
+										<el-avatar :size="200" :src="user.avatarUrl" fit="fill"
+										           shape="square"
+										           @click="cropperModel=true"/>
+									</el-col>
+									<el-col :md="16" :sm="14" :xs="24" class="grid-cell">
+										<el-form-item label="用户名" prop="">
+											<el-input v-model="user.userName" clearable type="text"></el-input>
+										</el-form-item>
+										<el-form-item label="年龄" prop="">
+											<el-input v-model="user.age" clearable type="number"></el-input>
+										</el-form-item>
+										<el-form-item label="手机号" prop="">
+											<el-input v-model="user.telephone" clearable type="text"></el-input>
+										</el-form-item>
+										<el-form-item label="密码" prop="">
+											<el-input v-model="user.password" clearable placeholder="留空表示不修改"
+											          type="password"></el-input>
+										</el-form-item>
+									</el-col>
+								</el-row>
 							</div>
-						</template>
-						<div>
-							<el-row>
-								<el-col :md="8" :sm="10" :xs="24" class="grid-cell">
-									<el-avatar :size="200" :src="user.avatarUrl" fit="fill"
-									           shape="square"
-									           @click="cropperModel=true"/>
-								</el-col>
-								<el-col :md="16" :sm="14" :xs="24" class="grid-cell">
-									<el-form-item label="用户名" prop="">
-										<el-input v-model="user.userName" clearable type="text"></el-input>
-									</el-form-item>
-									<el-form-item label="年龄" prop="">
-										<el-input v-model="user.age" clearable type="number"></el-input>
-									</el-form-item>
-									<el-form-item label="手机号" prop="">
-										<el-input v-model="user.telephone" clearable type="text"></el-input>
-									</el-form-item>
-									<el-form-item label="密码" prop="">
-										<el-input v-model="user.password" clearable placeholder="留空表示不修改"
-										          type="password"></el-input>
-									</el-form-item>
-								</el-col>
-							</el-row>
-						</div>
-					</el-card>
-				</el-form>
+						</el-card>
+					</el-form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -92,13 +105,23 @@ import {getModifyInfMail, getUserInfo, updateUserInfoApi} from "../../api/user/u
 import {onBeforeMount, ref} from "vue";
 import authCheck from '../../hooks/useCaptcha.js'
 import {ElNotification} from "element-plus";
-// import {logout} from "../../api/login.js";
 import {removeUser} from "../../store/token.js";
 import router from '../../router/index.js'
 import useUpYun from "../../hooks/useUpYun.js";
+import {getUserLikeSights} from "../../api/user/recommend.js";
+import PoiDetail from "../../components/search/PoiDetail.vue";
 
+let recommendList = ref([]);
+
+async function getRecommend() {
+	let res = await getUserLikeSights();
+	recommendList.value = res.data;
+}
+
+getRecommend()
 
 const {getCaptcha, captchaVal} = authCheck()
+
 
 getCaptcha();
 
