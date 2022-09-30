@@ -45,15 +45,25 @@
 								<span class="count">{{ blog.viewsCount }}</span>
 							</div>
 							<!-- 赞助按钮 -->
-							<div class="donate" @click="showDonate=!showDonate">
+							<div class="donate" @click="donateTactic()">
 								<span>赏</span>
 								<ul :class="{'show':showDonate}" class="donate_inner">
-									<li class="wedonate">
-										<img src="http://q1.qlogo.cn/g?b=qq&nk=1695560542&s=640">
-										<p>微信</p></li>
-									<li class="alidonate">
-										<img src="http://q1.qlogo.cn/g?b=qq&nk=1695560542&s=640">
-										<p>支付宝</p></li>
+									<!--									<li >
+																			<el-button type="primary" plain @click="paySponsor(5)">5元</el-button>
+																		</li>
+																		<li >
+																			<el-button type="primary" plain>5元</el-button>
+																		</li>-->
+									<iframe :srcdoc="payHtml"
+									        border="0"
+									        frameborder="no"
+									        height="75"
+									        marginheight="0"
+									        marginwidth="0"
+									        scrolling="no"
+									        style="overflow:hidden;"
+									        width="75">
+									</iframe>
 								</ul>
 							</div>
 						</footer>
@@ -99,6 +109,7 @@ import {getBlogDetail} from "../../api/user/tactic.js";
 import {addComment, getComment} from "../../api/user/comment.js";
 import {ElNotification} from "element-plus";
 import {getPoiRate, submitPoiRate} from "../../api/user/user_rate_poi.js";
+import {getPayStateApi, paySponsorApi} from "../../api/user/pay.js";
 
 export default {
 	name: 'Tactic',
@@ -114,7 +125,9 @@ export default {
 				pid: '0',
 			},
 			commentEdit: false,
-			rate_val: null
+			rate_val: null,
+			payHtml: null,
+			sponsorId: null
 		}
 	},
 	components: {
@@ -157,6 +170,47 @@ export default {
 		async getRate() {
 			let res = await getPoiRate(this.blog.uid);
 			this.rate_val = res.data;
+		},
+		paySponsor(num) {
+			paySponsorApi({
+				tacticId: this.blog.tacticId,
+				money: num
+			}).then((res) => {
+				/*const div = document.createElement('div')
+				div.innerHTML = res.data
+				document.body.appendChild(div)
+				document.forms[0].submit()*/
+				this.payHtml = res.data.pay;
+				this.sponsorId = res.data.sponsorId;
+				this.getPaySate(this.sponsorId);
+			})
+		},
+		async getPaySate(sponsorId) {
+			if (sponsorId !== null) {
+				// 请求获取状态
+				let res = await getPayStateApi(sponsorId);
+				if (res.data) {
+					this.sponsorId = null;
+					ElNotification({
+						message: '赞助成功', type: 'success'
+					})
+				} else {
+					// 如果是打开着的
+					if (this.showDonate) {
+						// 过2s调用
+						setTimeout(() => {
+							this.getPaySate(sponsorId);
+						}, 2000);
+					}
+				}
+			}
+		},
+		donateTactic() {
+			// 如果不展开展开的时候就请求赞助支付接口
+			if (!this.showDonate) {
+				this.paySponsor(6);
+			}
+			this.showDonate = !this.showDonate;
 		}
 	},
 	mounted() {
@@ -280,7 +334,7 @@ article.hentry {
 				list-style: none;
 				position: absolute;
 				left: 80px;
-				top: -40px;
+				top: -10px;
 				background: #FFF;
 				padding: 10px;
 				border: 1px solid #ddd;

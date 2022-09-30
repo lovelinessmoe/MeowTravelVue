@@ -5,10 +5,12 @@
 				<div slot="header" class="clearfix" style="margin-bottom: 10px;">{{ infoItem.name }}</div>
 				{{ infoItem.address }}
 				<el-button @click="seeLocationDetail(infoItem.uid)">查看详情</el-button>
+				<el-button @click="seeRecommendHotel(infoItem)">查看推荐酒店</el-button>
 			</el-card>
 		</el-row>
 	</div>
-	<baidu-map :center="{lng: location.lng, lat: location.lat}" :scroll-wheel-zoom="true"
+	<baidu-map :center="{lng: location.lng, lat: location.lat}"
+	           :scroll-wheel-zoom="true"
 	           :zoom="10" class="map"
 	           style="height: 800px;"
 	>
@@ -33,10 +35,19 @@
 		title="查看地点详情">
 		<PoiDetail v-if="detailModel" :poi-id="detailId"></PoiDetail>
 	</el-dialog>
+
+	<el-dialog
+		v-model="hotelRecommendModel"
+		title="推荐酒店">
+		<div style="display: flex;width: 100%;flex-wrap: wrap;justify-content: space-between;">
+			<PoiDetail v-for="item in hotelRecommendList"
+			           :poi="item" style="flex: 0 0 32%;border-radius: 10px;margin-bottom: 10px;"/>
+		</div>
+	</el-dialog>
 </template>
 
 <script>
-import {searchSights} from "../../../api/user/baiduMap.js";
+import {searchHotel, searchSights} from "../../../api/user/baiduMap.js";
 import store from "../../../store/index.js";
 import PoiDetail from "../../../components/search/PoiDetail.vue";
 
@@ -54,6 +65,8 @@ export default {
 			infoItem: undefined,
 			detailModel: false,
 			detailId: undefined,
+			hotelRecommendModel: false,
+			hotelRecommendList: []
 		};
 	},
 	watch: {
@@ -74,11 +87,17 @@ export default {
 			this.location.lat = store.state.location.point.lat
 			this.location.lng = store.state.location.point.lng
 			let region = store.state.location.address.city
-			return searchSights(key, this.location.lat + "," + this.location.lng, region);
+			// return searchSights(key, this.location.lat + "," + this.location.lng, region);
+			return searchSights(key, '', region);
 		},
 		async seeLocationDetail(uid) {
 			this.detailId = uid;
 			this.detailModel = true
+		},
+		async seeRecommendHotel(sight) {
+			let res = await searchHotel("", sight.locationLat + "," + sight.locationLng);
+			this.hotelRecommendList = res.data;
+			this.hotelRecommendModel = true;
 		}
 	}
 }

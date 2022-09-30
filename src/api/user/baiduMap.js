@@ -20,7 +20,7 @@ export const searchHotel = (query, location) => {
     return request({
         url: 'map/map/search',
         method: 'get',
-        params: {query, location, tag: '酒店'}
+        params: {query, location, tag: '酒店',}
     })
 }
 
