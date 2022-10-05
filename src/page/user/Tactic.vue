@@ -191,6 +191,7 @@ export default {
 				let res = await getPayStateApi(sponsorId);
 				if (res.data) {
 					this.sponsorId = null;
+					this.showDonate = false;
 					ElNotification({
 						message: '赞助成功', type: 'success'
 					})
