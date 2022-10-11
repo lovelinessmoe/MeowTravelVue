@@ -14,7 +14,7 @@
 			</div>
 			<div class="footer-item">
 				<div>
-					<span>喵喵博客由</span>
+					<span>喵喵出行由</span>
 					<!--                    <img height="20" src="@/assets/img/upyun_logo.svg" style="vertical-align:middle;" width="40"/>-->
 					<a class="out-link" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"
 					   target="_blank"> 又拍云 </a>
@@ -22,9 +22,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="copyright">Copyright © 2022 by <a class="out-link" href="https://www.javaee.xyz" target="_blank">javaee.xyz</a>
+		<div class="copyright">Copyright © 2022 by <a class="out-link" href="https://www.ashes.vip" target="_blank">ashes.vip</a>
 			. All rights reserved. |
-			<!--            <a target="_blank" class="out-link" href="http://www.beian.miit.gov.cn">渝ICP备17015355号-1</a>-->
+			<a class="out-link" href="https://www.beian.miit.gov.cn" target="_blank">蒙ICP备2021003323号-2</a>
 		</div>
 	</div>
 </template>

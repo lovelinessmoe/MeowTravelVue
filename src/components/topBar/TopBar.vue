@@ -29,6 +29,9 @@
 					<div class="sub-menu">
 						<router-link to="/system/poiMan">景点管理</router-link>
 					</div>
+					<div class="sub-menu">
+						<router-link to="/system/sponsorMan">赞助管理</router-link>
+					</div>
 				</div>
 			</div>
 			<div v-if="this.$store.state.user" class="menu-item hasChild">

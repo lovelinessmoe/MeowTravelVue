@@ -45,16 +45,30 @@
 								<span class="count">{{ blog.viewsCount }}</span>
 							</div>
 							<!-- 赞助按钮 -->
-							<div class="donate" @click="donateTactic()">
-								<span>赏</span>
+							<div class="donate">
+								<span @click="this.showDonate = !this.showDonate;">赏</span>
 								<ul :class="{'show':showDonate}" class="donate_inner">
-									<!--									<li >
-																			<el-button type="primary" plain @click="paySponsor(5)">5元</el-button>
-																		</li>
-																		<li >
-																			<el-button type="primary" plain>5元</el-button>
-																		</li>-->
-									<iframe :srcdoc="payHtml"
+									<div v-if="!showCrCode">
+										<li>
+											<el-button plain type="primary" @click="this.paySponsor(5);">5元</el-button>
+										</li>
+										<li>
+											<el-button plain type="primary" @click="this.paySponsor(10);">10元
+											</el-button>
+										</li>
+										<br>
+										<li>
+											<el-input v-model="donateNum" placeholder="自定义金额" plain
+											          style="width: 62px"
+											          type="primary"></el-input>
+										</li>
+										<li>
+											<el-button plain type="primary" @click="this.paySponsor(donateNum);">确定
+											</el-button>
+										</li>
+									</div>
+									<iframe v-else
+									        :srcdoc="payHtml"
 									        border="0"
 									        frameborder="no"
 									        height="75"
@@ -71,7 +85,7 @@
 
 					<!--声明-->
 					<div class="open-message">
-						<p>声明：Meow博客|版权所有，违者必究|如未注明，均为原创</p>
+						<p>声明：Meow出行|版权所有，违者必究|如未注明，均为原创</p>
 						<p>转载：转载请注明原文链接</p>
 					</div>
 					<!--评论-->
@@ -127,7 +141,9 @@ export default {
 			commentEdit: false,
 			rate_val: null,
 			payHtml: null,
-			sponsorId: null
+			sponsorId: null,
+			showCrCode: false,
+			donateNum: null
 		}
 	},
 	components: {
@@ -176,11 +192,8 @@ export default {
 				tacticId: this.blog.tacticId,
 				money: num
 			}).then((res) => {
-				/*const div = document.createElement('div')
-				div.innerHTML = res.data
-				document.body.appendChild(div)
-				document.forms[0].submit()*/
 				this.payHtml = res.data.pay;
+				this.showCrCode = true;
 				this.sponsorId = res.data.sponsorId;
 				this.getPaySate(this.sponsorId);
 			})
@@ -191,13 +204,14 @@ export default {
 				let res = await getPayStateApi(sponsorId);
 				if (res.data) {
 					this.sponsorId = null;
+					this.showCrCode = false;
 					this.showDonate = false;
 					ElNotification({
 						message: '赞助成功', type: 'success'
 					})
 				} else {
 					// 如果是打开着的
-					if (this.showDonate) {
+					if (this.showCrCode) {
 						// 过2s调用
 						setTimeout(() => {
 							this.getPaySate(sponsorId);
@@ -206,13 +220,6 @@ export default {
 				}
 			}
 		},
-		donateTactic() {
-			// 如果不展开展开的时候就请求赞助支付接口
-			if (!this.showDonate) {
-				this.paySponsor(6);
-			}
-			this.showDonate = !this.showDonate;
-		}
 	},
 	mounted() {
 		this.$store.commit('SET_LOADING', false);
